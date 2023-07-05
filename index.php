@@ -148,7 +148,7 @@ if (isset($_POST['login'])) {
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #61BD9A;">
     <div class="container">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="./">
         <img width="40%" src="images/Air-Amanah-Palangkaraya-Logo-fix.webp" alt="">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -158,13 +158,10 @@ if (isset($_POST['login'])) {
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" href="./">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="#">Profil Perusahaan</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Lacak Barang</a>
             </li>
             <li class="nav-item">
               <!-- Button trigger modal -->
@@ -204,6 +201,17 @@ if (isset($_POST['login'])) {
       </div>
     </div>
   </nav>
+  <div class="container-fluid mt-3">
+    <form action="/lacakbarang.php" method="get">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Masukkan nomor resi..." aria-label="Masukkan nomor resi..." aria-describedby="basic-addon2" name="resi">
+        <div class="input-group-append">
+          <button type="submit" class="input-group-text" id="basic-addon2">Lacak Barang</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
   <div class="container-fluid mb-3" style="background-color: #ECECEC;">
     <div class="container mt-3">
       <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">

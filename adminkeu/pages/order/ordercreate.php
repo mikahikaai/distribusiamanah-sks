@@ -67,6 +67,58 @@ if (isset($_POST['button_create'])) {
     $_SESSION['hasil_create'] = false;
     $_SESSION['pesan'] = "Gagal Menyimpan Data";
   }
+
+  //send notification to distributor
+
+  $id_pesanan = $db->lastInsertId();
+  // var_dump($id_pesanan);
+  // die();
+
+  $select_nope = 'SELECT * FROM pemesanan p INNER JOIN distributor d ON p.id_distro = d.id WHERE p.id = ?';
+  $stmt_nope = $db->prepare($select_nope);
+  $stmt_nope->bindParam(1, $id_pesanan);
+  $stmt_nope->execute();
+  $row_nope = $stmt_nope->fetch(PDO::FETCH_ASSOC);
+
+  $params = array(
+    'token' => '4k335ti7s9wvizpa',
+    'to' => $row_nope['no_telepon'],
+    'body' => 
+    'Hai ' . $row_nope['nama'] . ', ' . '\n' .
+    'Berikut adalah rincian pesanan anda pada hari ' . tanggal_indo(date('Y-m-d'), true) . ' dengan nomor order - ' . $row_nope['nomor_order'] . ':' .  '\n' .
+    'Cup 240ml : ' . $row_nope['cup'] . '\n' .
+    'Amigol 330ml : ' . $row_nope['a330'] . '\n' .
+    'Amigol 500ml : ' . $row_nope['a500'] . '\n' .
+    'Amigol 600ml : ' . $row_nope['a600'] . '\n' .
+    'Refill 19lt : ' . $row_nope['refill'] . '\n' .
+    'Terimakasih sudah melakukan pemesanan produk air amanah 🙏'
+  );
+  $curl = curl_init();
+  curl_setopt_array($curl, array(
+    CURLOPT_URL => "https://api.ultramsg.com/instance32799/messages/chat",
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => "",
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 30,
+    CURLOPT_SSL_VERIFYHOST => 0,
+    CURLOPT_SSL_VERIFYPEER => 0,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => "POST",
+    CURLOPT_POSTFIELDS => http_build_query($params),
+    CURLOPT_HTTPHEADER => array(
+      "content-type: application/x-www-form-urlencoded"
+    ),
+  ));
+
+  $response = curl_exec($curl);
+  $err = curl_error($curl);
+
+  curl_close($curl);
+
+  if ($err) {
+    echo "cURL Error #:" . $err;
+  }
+  
   echo '<meta http-equiv="refresh" content="0;url=?page=dataorder"/>';
   exit;
 }
