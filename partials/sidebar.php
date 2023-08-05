@@ -365,6 +365,14 @@
           </li> -->
         <?php } else if ($_SESSION['jabatan'] == "SPVDISTRIBUSI") {
         ?>
+          <li class="nav-item">
+            <a href="?page=dataorder" class="nav-link" id="inputdataorder">
+              <i class="nav-icon fas fa-money-bill"></i>
+              <p>
+                Data Order
+              </p>
+            </a>
+          </li>
           <li class="nav-item" id="rekapitulasi">
             <a href="#" class="nav-link" id="link_rekapitulasi">
               <i class="nav-icon fas fa-paperclip"></i>
@@ -422,6 +430,11 @@
                   <p>Distribusi</p>
                 </a>
               </li>
+              <!-- <li class="nav-item">
+                <a href="?page=returread" class="nav-link" id="retur"><i class="far fa-circle nav-icon"></i>
+                  <p>Retur</p>
+                </a>
+              </li> -->
               <!-- <li class="nav-item">
                 <a href="?page=rangeprestasikaryawan" class="nav-link" id="prestasikaryawan"><i class="far fa-circle nav-icon"></i>
                   <p>Prestasi Keberangkatan</p>

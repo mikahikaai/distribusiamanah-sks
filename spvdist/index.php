@@ -220,7 +220,11 @@ include_once "../partials/scripts.php";
       $("a#distribusi").addClass("active");
       $("li#master_distribusi").addClass("menu-open");
       $("a#link_master_distribusi").addClass("active");
-    } else if (title == "Prestasi") {
+    } else if (title == "Retur") {
+      $("a#retur").addClass("active");
+      $("li#master_distribusi").addClass("menu-open");
+      $("a#link_master_distribusi").addClass("active");
+    }else if (title == "Prestasi") {
       $("a#prestasikaryawan").addClass("active");
       $("li#master_distribusi").addClass("menu-open");
       $("a#link_master_distribusi").addClass("active");
@@ -228,7 +232,7 @@ include_once "../partials/scripts.php";
       $("a#rekapdistribusi").addClass("active");
       $("li#rekapitulasi").addClass("menu-open");
       $("a#link_rekapitulasi").addClass("active");
-    }
+    } 
   });
 
   //Get the button

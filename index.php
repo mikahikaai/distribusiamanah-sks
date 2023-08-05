@@ -95,10 +95,20 @@ if (isset($_POST['login'])) {
       if ($_SESSION['errorlogin']) {
 ?>
         <div id='errorlogin'></div>
-<?php
+    <?php
         unset($_SESSION['errorlogin']);
       }
     }
+  }
+}
+
+$_SESSION['popup_judul'] = true;
+if (isset($_SESSION['popup_judul'])) {
+  if ($_SESSION['popup_judul']) {
+    ?>
+    <div id='popup_judul'></div>
+<?php
+    unset($_SESSION['popup_judul']);
   }
 }
 
@@ -161,7 +171,7 @@ if (isset($_POST['login'])) {
               <a class="nav-link active" aria-current="page" href="./">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">Profil Perusahaan</a>
+              <a class="nav-link" href="/profile.php">Profil Perusahaan</a>
             </li>
             <li class="nav-item">
               <!-- Button trigger modal -->
@@ -351,6 +361,15 @@ if (isset($_POST['login'])) {
       title: 'Login Gagal',
       text: 'Username atau Password Salah!',
       icon: 'error',
+      confirmButtonText: 'OK'
+    })
+  };
+
+  if ($('div#popup_judul').length) {
+    Swal.fire({
+      title: 'Judul Aplikasi',
+      text: 'Sistem Informasi Layanan Pengiriman Barang Berbasis Web Pada PT Pancuran Kaapit Sendang di Kota Banjarbaru',
+      // icon: 'error',
       confirmButtonText: 'OK'
     })
   };

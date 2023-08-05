@@ -17,7 +17,9 @@ $stmt_karyawan = $db->prepare($select_karyawan);
 if (isset($_GET['id'])) {
 
   $main_select = "SELECT *, k1.nama supir, k2.nama helper1, k3.nama helper2, da.id id_distribusi_anggota
-FROM distribusi_anggota da LEFT JOIN distribusi_barang db on da.id = db.id_distribusi_anggota
+FROM distribusi_anggota da
+LEFT JOIN distribusi_barang db on da.id = db.id_distribusi_anggota
+LEFT JOIN retur r on db.id = r.id_distribusi_barang
 INNER JOIN armada a ON a.id = da.id_plat
 LEFT JOIN karyawan k1 ON k1.id = da.driver
 LEFT JOIN karyawan k2 ON k2.id = da.helper_1
@@ -213,19 +215,66 @@ WHERE da.id = ?";
                 </div>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col-md">
+                <div class="form-group">
+                  <label for="rcup1[]">Retur Cup</label>
+                  <input type="number" name="rcup1[]" class="form-control" value="<?= $row_da[$i]['rcup'] ?>">
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="form-group">
+                  <label for="ra3301">Retur A330</label>
+                  <input type="number" name="ra3301[]" class="form-control" value="<?= $row_da[$i]['ra330'] ?>">
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="form-group">
+                  <label for="ra5001">Retur A500</label>
+                  <input type="number" name="ra5001[]" class="form-control" value="<?= $row_da[$i]['ra500'] ?>">
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="form-group">
+                  <label for="ra6001">Retur A600</label>
+                  <input type="number" name="ra6001[]" class="form-control" value="<?= $row_da[$i]['ra600'] ?>">
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="form-group">
+                  <label for="rrefill1">Retur Refill</label>
+                  <input type="number" name="rrefill1[]" class="form-control" value="<?= $row_da[$i]['rrefill'] ?>">
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       <?php } ?>
       <div id="new"></div>
 
       <div class="form-group mt-3">
-        <label for="jam_berangkat">Jam Keberangkatan</label>
-        <div class="row">
-          <div class="col-md-4">
-            <input id='datetimepicker1' type='text' class='form-control' data-td-target='#datetimepicker1' placeholder="dd/mm/yyyy hh:mm" name="jam_berangkat" value="<?= tanggal_indo($row_da[0]['jam_berangkat']) ?>" required>
+          <div class="row">
+            <div class="col-md-4">
+              <label for="jam_berangkat">Jam Keberangkatan</label>
+              <input type='text' class='form-control' data-td-target='#datetimepicker1' placeholder="dd/mm/yyyy hh:mm" value="<?= tanggal_indo($row_da[0]['jam_berangkat']) ?>" disabled>
+            </div>
+            <div class="col-md-4">
+              <label for="jam_datang">Jam Kedatangan</label>
+              <?php if ($row_da[0]['jam_datang'] == NULL) { ?>
+                <input id='datetimepicker1' type='text' class='form-control' data-td-target='#datetimepicker1' placeholder="dd/mm/yyyy hh:mm" name="jam_datang" required>
+              <?php } else { ?>
+                <input id='datetimepicker1' type='text' class='form-control' data-td-target='#datetimepicker1' placeholder="dd/mm/yyyy hh:mm" value="<?= tanggal_indo($row_da[0]['jam_datang']) ?>" name="jam_datang" required>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md">
+              <label for="">Bukti Surat Perjalanan</label>
+              <img width="25%" src="../images/<?= $row_da[0]['bukti_kedatangan'] ?>" alt="">
+            </div>
           </div>
         </div>
-      </div>
 
     </div>
   </div>
@@ -239,7 +288,7 @@ include_once "../partials/scriptdatatables.php";
   $(document).ready(function() {
 
     $("*").keydown(function(event) {
-      return false;
+      // return false;
     });
 
     $('select').prop('disabled', true);

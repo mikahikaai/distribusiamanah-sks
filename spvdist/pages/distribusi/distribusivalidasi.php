@@ -16,8 +16,10 @@ $stmt_karyawan = $db->prepare($select_karyawan);
 
 if (isset($_GET['id'])) {
 
-  $main_select = "SELECT *, k1.nama supir, k2.nama helper1, k3.nama helper2, da.id id_distribusi_anggota
-FROM distribusi_anggota da LEFT JOIN distribusi_barang db on da.id = db.id_distribusi_anggota
+  $main_select = "SELECT *, k1.nama supir, k2.nama helper1, k3.nama helper2, da.id id_distribusi_anggota, r.id_distribusi_barang id_db
+FROM distribusi_anggota da
+LEFT JOIN distribusi_barang db on da.id = db.id_distribusi_anggota
+LEFT JOIN retur r on db.id = r.id_distribusi_barang
 INNER JOIN armada a ON a.id = da.id_plat
 LEFT JOIN karyawan k1 ON k1.id = da.driver
 LEFT JOIN karyawan k2 ON k2.id = da.helper_1
@@ -139,6 +141,7 @@ WHERE da.id = ?";
               <div class="row">
                 <div class="col-md-4" id="xyz1">
                   <div class="form-group">
+                    <input type="hidden" name="id_db[]" value="<?= $row_da[$i]['id_db'] ?>">
                     <label for="nama_pel_1[]">Distributor</label>
                     <select name="nama_pel_1[]" class="form-control" required>
                       <?php
@@ -206,6 +209,39 @@ WHERE da.id = ?";
                   </div>
                 </div>
               </div>
+
+              <div class="row">
+                <div class="col-md">
+                  <div class="form-group">
+                    <label for="rcup1[]">Retur Cup</label>
+                    <input type="number" name="rcup1[]" class="form-control" value="<?= $row_da[$i]['rcup'] ?>">
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-group">
+                    <label for="ra3301">Retur A330</label>
+                    <input type="number" name="ra3301[]" class="form-control" value="<?= $row_da[$i]['ra330'] ?>">
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-group">
+                    <label for="ra5001">Retur A500</label>
+                    <input type="number" name="ra5001[]" class="form-control" value="<?= $row_da[$i]['ra500'] ?>">
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-group">
+                    <label for="ra6001">Retur A600</label>
+                    <input type="number" name="ra6001[]" class="form-control" value="<?= $row_da[$i]['ra600'] ?>">
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="form-group">
+                    <label for="rrefill1">Retur Refill</label>
+                    <input type="number" name="rrefill1[]" class="form-control" value="<?= $row_da[$i]['rrefill'] ?>">
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         <?php } ?>
@@ -221,8 +257,12 @@ WHERE da.id = ?";
               <?php if ($row_da[0]['jam_datang'] == NULL) { ?>
                 <input id='datetimepicker1' type='text' class='form-control' data-td-target='#datetimepicker1' placeholder="dd/mm/yyyy hh:mm" name="jam_datang" required>
               <?php } else { ?>
-                <input id='datetimepicker1' type='text' class='form-control' data-td-target='#datetimepicker1' placeholder="dd/mm/yyyy hh:mm" value="<?= tanggal_indo($row_da[0]['jam_datang']) ?>" name="jam_datang" required>
+                <input id='datetimepicker1' type='text' class='form-control' data-td-target='#datetimepicker1' placeholder="dd/mm/yyyy hh:mm" value="<?= $row_da[0]['jam_datang'] ?>" name="jam_datang" required>
               <?php } ?>
+            </div>
+            <div class="col-md-4">
+              <label for="upload_surat_perjalanan">Upload Surat Perjalanan</label>
+              <input type='file' class='form-control' name="upload_surat_perjalanan" accept="image/*">
             </div>
           </div>
         </div>

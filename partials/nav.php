@@ -18,7 +18,7 @@ if ($_SESSION['jabatan'] == 'ADMINKEU') {
   </ul>
   <table width="100%">
     <tr>
-      <td align="center" style="font-weight: bold; font-size: 20px;"> >>> Selamat Datang Di Aplikasi Penggajian <span style="color : green;">PT PANCURAN KAAPIT SENDANG</span> - Saat Ini Anda Login Sebagai <span style="color: red;"><?= $jabatan ?></span>
+      <td align="center" style="font-weight: bold; font-size: 20px;"> >>> Selamat Datang Di Aplikasi Distribusi Produk <span style="color : green;">PT PANCURAN KAAPIT SENDANG</span> - Saat Ini Anda Login Sebagai <span style="color: red;"><?= $jabatan ?></span>
         <<< </td>
     </tr>
   </table>

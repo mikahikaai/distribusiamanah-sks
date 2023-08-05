@@ -112,7 +112,7 @@ if (isset($_SESSION['hasil'])) {
           LEFT JOIN karyawan k2 ON k2.id = da.helper_1
           LEFT JOIN karyawan k3 ON k3.id = da.helper_2
           LEFT JOIN pemesanan p ON p.id = db.id_order
-          LEFT JOIN distributor d ON d.id = p.id_distro";
+          LEFT JOIN distributor d ON d.id = p.id_distro ORDER BY db.id DESC";
           $stmt = $db->prepare($selectsql);
           $stmt->execute();
 

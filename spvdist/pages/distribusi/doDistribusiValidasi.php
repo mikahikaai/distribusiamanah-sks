@@ -2,13 +2,17 @@
 $database = new Database;
 $db = $database->getConnection();
 
+// var_dump($_POST['upload_surat_perjalanan']);
+// die();
+
 $jam_datang_format = date_create_from_format('d/m/Y, H.i.s', $_POST['jam_datang']);
 $jam_datang = $jam_datang_format->format('Y-m-d H:i:s');
 
-$updatesql = "UPDATE distribusi_anggota SET jam_datang=? WHERE id = ?";
+$updatesql = "UPDATE distribusi_anggota SET jam_datang=?, bukti_kedatangan=? WHERE id = ?";
 $stmt_update = $db->prepare($updatesql);
 $stmt_update->bindParam(1, $jam_datang);
-$stmt_update->bindParam(2, $_GET['id']);
+$stmt_update->bindParam(2, $_POST['upload_surat_perjalanan']);
+$stmt_update->bindParam(3, $_GET['id']);
 $stmt_update->execute();
 
 $jumlah_data = count($_POST['pesanan']);
@@ -19,6 +23,16 @@ for ($i = 0; $i < $jumlah_data; $i++) {
   $updatestatuspesanan = "UPDATE distribusi_barang SET status='Sudah Dikirim' WHERE id_order = ?";
   $stmt_update_status_pesanan = $db->prepare($updatestatuspesanan);
   $stmt_update_status_pesanan->bindParam(1, $_POST['pesanan'][$i]);
+  $stmt_update_status_pesanan->execute();
+
+  $updateretur = "UPDATE retur SET rcup=?, ra330=?, ra500=?, ra600=?, rrefill=? WHERE id_distribusi_barang = ?";
+  $stmt_update_status_pesanan = $db->prepare($updateretur);
+  $stmt_update_status_pesanan->bindParam(1, $_POST['rcup1'][$i]);
+  $stmt_update_status_pesanan->bindParam(2, $_POST['ra3301'][$i]);
+  $stmt_update_status_pesanan->bindParam(3, $_POST['ra5001'][$i]);
+  $stmt_update_status_pesanan->bindParam(4, $_POST['ra6001'][$i]);
+  $stmt_update_status_pesanan->bindParam(5, $_POST['rrefill1'][$i]);
+  $stmt_update_status_pesanan->bindParam(6, $_POST['id_db'][$i]);
   $stmt_update_status_pesanan->execute();
 }
 
