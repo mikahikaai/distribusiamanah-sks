@@ -48,6 +48,8 @@ if (isset($_SESSION['jabatan'])) {
     echo '<meta http-equiv="refresh" content="0;url=/karyawan/"/>';
   } else if ($_SESSION['jabatan'] == "MGRDISTRIBUSI") {
     echo '<meta http-equiv="refresh" content="0;url=/mgrdist/"/>';
+  } else if ($_SESSION['jabatan'] == "MASTER") {
+    echo '<meta http-equiv="refresh" content="0;url=/master/"/>';
   }
   die();
 }
@@ -87,6 +89,9 @@ if (isset($_POST['login'])) {
       die();
     } else if ($_SESSION['jabatan'] == "MGRDISTRIBUSI") {
       echo '<meta http-equiv="refresh" content="0;url=/mgrdist"/>';
+      die();
+    } else if ($_SESSION['jabatan'] == "MASTER") {
+      echo '<meta http-equiv="refresh" content="0;url=/master"/>';
       die();
     }
   } else {

@@ -82,7 +82,3 @@ if (isset($_GET['id'])) {
   </div>
 </div>
 <!-- /.content -->
-
-<?php
-include_once "../partials/scriptdatatables.php";
-?>

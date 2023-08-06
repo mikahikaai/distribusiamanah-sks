@@ -47,7 +47,7 @@ if (isset($_SESSION['hasil'])) {
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Order</h1>
+        <h1 class="m-0">Retur</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -67,9 +67,6 @@ if (isset($_SESSION['hasil'])) {
       <h3 class="card-title">Data Retur</h3>
       <a href="report/reportretur.php" target="_blank" class="btn btn-warning btn-sm float-right">
         <i class="fa fa-file-pdf"></i> Export PDF
-      </a>
-      <a href="?page=returcreate" class="btn btn-success btn-sm mr-2 float-right">
-        <i class="fa fa-plus-circle"></i> Tambah Retur
       </a>
     </div>
     <div class="card-body">
@@ -91,50 +88,35 @@ if (isset($_SESSION['hasil'])) {
           </tr>
         </thead>
         <tbody>
-          <!-- <?php
-                $database = new Database;
-                $db = $database->getConnection();
+          <?php
+          $database = new Database;
+          $db = $database->getConnection();
 
-                $selectsql = 'SELECT *, p.id id_order FROM pemesanan p INNER JOIN distributor d ON p.id_distro = d.id LEFT JOIN distribusi_barang db ON db.id_order = p.id ORDER BY db.status ASC';
-                $stmt = $db->prepare($selectsql);
-                $stmt->execute();
-
-                $no = 1;
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                  if ($row['status'] == NULL) {
-                ?>
-
-              <tr style="background-color: pink">
-              <?php } else { ?>
-              <tr>
-              <?php } ?>
+          $selectsql = 'SELECT *, p.id id_order FROM retur r
+                LEFT JOIN distribusi_barang db ON r.id_distribusi_barang = db.id
+                LEFT JOIN pemesanan p ON p.id = db.id_order
+                LEFT JOIN distribusi_anggota da ON db.id_distribusi_anggota = da.id
+                INNER JOIN distributor d ON p.id_distro = d.id
+                ORDER BY db.status ASC';
+          $stmt = $db->prepare($selectsql);
+          $stmt->execute();
+          $no = 1;
+          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+          ?>
+            <tr>
               <td><?= $no++ ?></td>
               <td><?= $row['nomor_order'] ?></td>
               <td><?= tanggal_indo($row['tgl_order']) ?></td>
               <td><?= $row['nama'] ?></td>
-              <td><?= $row['cup'] ?></td>
-              <td><?= $row['a330'] ?></td>
-              <td><?= $row['a500'] ?></td>
-              <td><?= $row['a600'] ?></td>
-              <td><?= $row['refill'] ?></td>
-              <?php if ($row['status'] == NULL) { ?>
-                <td>Perlu Dikirim</td>
-                <td>
-                  <a href="?page=distribusicreate" class="btn btn-success btn-sm mr-1">
-                    <i class="fa fa-plane"></i> Kirim
-                  </a>
-                </td>
-              <?php } else { ?>
-                <td><?= $row['status'] ?></td>
-                <td>
-                  <button type="button" class="btn btn-danger btn-sm mr-1" disabled>
-                    <i class="fa fa-plane"></i> Kirim
-                  </button>
-                </td>
-              <?php } ?>
-              </tr>
-            <?php } ?>
-        </tbody> -->
+              <td><?= tanggal_indo(date_format(date_create($row['tanggal']), 'Y-m-d')) ?></td>
+              <td><?= $row['rcup'] ?></td>
+              <td><?= $row['ra330'] ?></td>
+              <td><?= $row['ra500'] ?></td>
+              <td><?= $row['ra600'] ?></td>
+              <td><?= $row['rrefill'] ?></td>
+            </tr>
+          <?php } ?>
+        </tbody>
       </table>
     </div>
   </div>

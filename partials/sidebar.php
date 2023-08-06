@@ -140,31 +140,44 @@
               </li>
             </ul>
           </li>
-        <?php } else if ($_SESSION['jabatan'] == 'MGRDISTRIBUSI') {
+        <?php } else if ($_SESSION['jabatan'] == 'MASTER') {
         ?>
-          <li class="nav-item" id="pengajuanupah">
-            <a href="#" class="nav-link" id="link_pengajuanupah">
-              <i class="nav-icon fas fa-money-bill"></i>
+          <li class="nav-item" id='order'>
+            <a href="#" class="nav-link" id='link_order'>
+              <i class="nav-icon fas fa-cart-shopping"></i>
               <p>
-                Penggajian
+                Order
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="?page=pengajuanupah" class="nav-link" id="verifupah">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Verifikasi Upah</p>
+                <a href="?page=dataorder" class="nav-link" id="inputdataorder">
+                  <i class="nav-icon far fa-circle nav-icon"></i>
+                  <p>
+                    Data Order
+                  </p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="?page=pengajuaninsentif" class="nav-link" id="verifinsentif">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Verifikasi Insentif</p>
+                <a href="?page=datasisaorder" class="nav-link" id="sisaorder">
+                  <i class="nav-icon far fa-circle nav-icon"></i>
+                  <p>
+                    Data Sisa Order
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="?page=dataretur" class="nav-link" id="dataretur">
+                  <i class="nav-icon far fa-circle nav-icon"></i>
+                  <p>
+                    Data Retur
+                  </p>
                 </a>
               </li>
             </ul>
           </li>
+
           <li class="nav-item" id="rekapitulasi">
             <a href="#" class="nav-link" id="link_rekapitulasi">
               <i class="nav-icon fas fa-paperclip"></i>
@@ -174,36 +187,6 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="?page=rangerekappengajuanupah" class="nav-link" id="rekappengajuanupah">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Rekap Pengajuan Upah</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="?page=rangerekappengajuaninsentif" class="nav-link" id="rekappengajuaninsentif">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Rekap Pengajuan Insentif</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="?page=rangerekapupah" class="nav-link" id="rekapupah">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Rekap Upah</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="?page=rangerekapinsentif" class="nav-link" id="rekapinsentif">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Rekap Insentif</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="?page=rangerekapgaji" class="nav-link" id="rekapgaji">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Rekap Gaji</p>
-                </a>
-              </li>
               <li class="nav-item">
                 <a href="?page=rangerekapdistribusi" class="nav-link" id="rekapdistribusi">
                   <i class="far fa-circle nav-icon"></i>
@@ -250,6 +233,11 @@
               <li class="nav-item">
                 <a href="?page=distribusiread" class="nav-link" id="distribusi"><i class="far fa-circle nav-icon"></i>
                   <p>Distribusi</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="?page=ratingread" class="nav-link" id="rating"><i class="far fa-circle nav-icon"></i>
+                  <p>Kepuasan Pelanggan</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -365,14 +353,34 @@
           </li> -->
         <?php } else if ($_SESSION['jabatan'] == "SPVDISTRIBUSI") {
         ?>
-          <li class="nav-item">
-            <a href="?page=dataorder" class="nav-link" id="inputdataorder">
-              <i class="nav-icon fas fa-money-bill"></i>
+          <li class="nav-item" id='order'>
+            <a href="#" class="nav-link" id='link_order'>
+              <i class="nav-icon fas fa-cart-shopping"></i>
               <p>
-                Data Order
+                Order
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="?page=dataorder" class="nav-link" id="inputdataorder">
+                  <i class="nav-icon far fa-circle nav-icon"></i>
+                  <p>
+                    Data Sisa Order
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="?page=dataretur" class="nav-link" id="dataretur">
+                  <i class="nav-icon far fa-circle nav-icon"></i>
+                  <p>
+                    Data Retur
+                  </p>
+                </a>
+              </li>
+            </ul>
           </li>
+
           <li class="nav-item" id="rekapitulasi">
             <a href="#" class="nav-link" id="link_rekapitulasi">
               <i class="nav-icon fas fa-paperclip"></i>
@@ -430,16 +438,16 @@
                   <p>Distribusi</p>
                 </a>
               </li>
-              <!-- <li class="nav-item">
-                <a href="?page=returread" class="nav-link" id="retur"><i class="far fa-circle nav-icon"></i>
-                  <p>Retur</p>
+              <li class="nav-item">
+                <a href="?page=ratingread" class="nav-link" id="rating"><i class="far fa-circle nav-icon"></i>
+                  <p>Kepuasan Pelanggan</p>
                 </a>
-              </li> -->
-              <!-- <li class="nav-item">
+              </li>
+              <li class="nav-item">
                 <a href="?page=rangeprestasikaryawan" class="nav-link" id="prestasikaryawan"><i class="far fa-circle nav-icon"></i>
                   <p>Prestasi Keberangkatan</p>
                 </a>
-              </li> -->
+              </li>
             </ul>
           </li>
         <?php }; ?>

@@ -26,6 +26,9 @@ include_once "../partials/cssdatatables.php";
       <h3 class="card-title font-weight-bold">Data Rekap Prestasi Keberangkatan<br>
         Periode : <?= tanggal_indo($_SESSION['tgl_prestasi_awal']->format('Y-m-d')) . " sd " .  tanggal_indo($_SESSION['tgl_prestasi_akhir']->format('Y-m-d')); ?>
       </h3>
+      <a href="report/reportprestasikaryawan.php" target="_blank" class="btn btn-warning btn-sm float-right">
+        <i class="fa fa-file-pdf"></i> Export PDF
+      </a>
     </div>
     <div class="card-body">
       <table id="mytable" class="table table-bordered table-hover">
@@ -33,9 +36,9 @@ include_once "../partials/cssdatatables.php";
           <tr>
             <th>No.</th>
             <th>Nama</th>
-            <th>Total Berangkat</th>
             <th>Tepat Waktu</th>
             <th>Terlambat</th>
+            <th>Total Berangkat</th>
             <th>Keterangan</th>
             <th>Opsi</th>
           </tr>
@@ -47,25 +50,16 @@ include_once "../partials/cssdatatables.php";
           $database = new Database;
           $db = $database->getConnection();
 
-          $selectSql = "SELECT k1.nama, COUNT(k1.nama) total_berangkat, k1.id id_karyawan,
-          (SELECT COUNT(*) FROM gaji u LEFT JOIN distribusi d ON u.id_distribusi = d.id 
-          INNER JOIN karyawan k ON k.id = u.id_pengirim WHERE d.jam_datang > d.estimasi_jam_datang + INTERVAL 15 MINUTE AND k.id = k1.id AND (d.jam_berangkat BETWEEN ? AND ?)) tidak_tepat_waktu ,
-          (SELECT COUNT(*) FROM gaji u LEFT JOIN distribusi d ON u.id_distribusi = d.id 
-          INNER JOIN karyawan k ON k.id = u.id_pengirim WHERE d.jam_datang <= d.estimasi_jam_datang + INTERVAL 15 MINUTE AND k.id = k1.id AND (d.jam_berangkat BETWEEN ? AND ?)) tepat_waktu
-          FROM gaji u
-          LEFT JOIN distribusi d ON u.id_distribusi = d.id 
-          INNER JOIN karyawan k1 ON k1.id = u.id_pengirim
-          WHERE (d.jam_berangkat BETWEEN ? AND ?) AND d.jam_datang IS NOT NULL AND k1.id = IF(? = 'all', k1.id, ?) 
-          GROUP BY k1.nama ORDER BY k1.nama ASC";
+          $selectSql = "SELECT k.nama,
+          (SELECT count(*) FROM distribusi_anggota da WHERE (driver = k.id or helper_1 = k.id or helper_2 = k.id) AND jam_datang <= estimasi_jam_datang + INTERVAL 15 MINUTE AND (jam_berangkat BETWEEN :awal AND :akhir)) tepat_waktu,
+          (SELECT count(*) FROM distribusi_anggota da WHERE (driver = k.id or helper_1 = k.id or helper_2 = k.id) AND jam_datang > estimasi_jam_datang + INTERVAL 15 MINUTE AND (jam_berangkat BETWEEN :awal AND :akhir)) tidak_tepat_waktu,
+          (SELECT count(*) FROM distribusi_anggota da WHERE (driver = k.id or helper_1 = k.id or helper_2 = k.id) AND jam_datang is not null AND (jam_berangkat BETWEEN :awal and :akhir)) total_berangkat
+          FROM karyawan k
+          HAVING total_berangkat > 0 
+          ";
           $stmt = $db->prepare($selectSql);
-          $stmt->bindParam(1, $tgl_rekap_awal);
-          $stmt->bindParam(2, $tgl_rekap_akhir);
-          $stmt->bindParam(3, $tgl_rekap_awal);
-          $stmt->bindParam(4, $tgl_rekap_akhir);
-          $stmt->bindParam(5, $tgl_rekap_awal);
-          $stmt->bindParam(6, $tgl_rekap_akhir);
-          $stmt->bindParam(7, $_SESSION['id_karyawan_prestasi']);
-          $stmt->bindParam(8, $_SESSION['id_karyawan_prestasi']);
+          $stmt->bindParam('awal', $tgl_rekap_awal);
+          $stmt->bindParam('akhir', $tgl_rekap_akhir);
           $stmt->execute();
 
           $no = 1;
@@ -74,9 +68,9 @@ include_once "../partials/cssdatatables.php";
             <tr>
               <td><?= $no++ ?></td>
               <td><?= $row['nama'] ?></td>
-              <td><?= $row['total_berangkat'] ?></td>
               <td><?= $row['tepat_waktu'] . "x (" . (round($row['tepat_waktu'] / $row['total_berangkat'], 2)) * 100 . "%)" ?></td>
               <td><?= $row['tidak_tepat_waktu'] . "x (" . (round($row['tidak_tepat_waktu'] / $row['total_berangkat'], 2)) * 100 . "%)" ?></td>
+              <td><?= $row['total_berangkat'] ?></td>
               <td>
                 <?php
                 if ($row['tepat_waktu'] / $row['total_berangkat'] >= 0.8) {

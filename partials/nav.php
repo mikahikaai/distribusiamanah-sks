@@ -8,6 +8,8 @@ if ($_SESSION['jabatan'] == 'ADMINKEU') {
   $jabatan = 'KARYAWAN';
 } else if ($_SESSION['jabatan'] == 'MGRDISTRIBUSI') {
   $jabatan = 'MANAGER DISTRIBUSI';
+} else if ($_SESSION['jabatan'] == 'MASTER') {
+  $jabatan = 'MASTER';
 }
 ?>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">

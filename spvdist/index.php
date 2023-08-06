@@ -216,8 +216,20 @@ include_once "../partials/scripts.php";
       $("a#distributor").addClass("active");
       $("li#master_data").addClass("menu-open");
       $("a#link_master_data").addClass("active");
+    } else if (title == "Order") {
+      $("a#inputdataorder").addClass("active");
+      $("li#order").addClass("menu-open");
+      $("a#link_order").addClass("active");
+    } else if (title == "Retur") {
+      $("a#dataretur").addClass("active");
+      $("li#order").addClass("menu-open");
+      $("a#link_order").addClass("active");
     } else if (title == "Distribusi") {
       $("a#distribusi").addClass("active");
+      $("li#master_distribusi").addClass("menu-open");
+      $("a#link_master_distribusi").addClass("active");
+    } else if (title == "Rating") {
+      $("a#rating").addClass("active");
       $("li#master_distribusi").addClass("menu-open");
       $("a#link_master_distribusi").addClass("active");
     } else if (title == "Retur") {

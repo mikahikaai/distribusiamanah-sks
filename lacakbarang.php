@@ -63,6 +63,12 @@ $row_da = $stmt_da->fetch(PDO::FETCH_ASSOC);
       font-size: large;
       font-weight: 600;
     }
+
+    @media print {
+      a, footer {
+        display: none;
+      }
+    }
   </style>
 </head>
 
@@ -96,7 +102,7 @@ $row_da = $stmt_da->fetch(PDO::FETCH_ASSOC);
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">Nomor Resi - <span style="font-weight: bold;"><?= $row_da['no_resi'] ?></span> - <?= $row_da['status_perjalanan'] ?></h3>
-            <a href="./" class="btn btn-danger btn-sm float-end">
+            <a style="display: none;" href="./" class="btn btn-danger btn-sm float-end">
               <i class="fa fa-arrow-left"></i> Kembali
             </a>
           </div>

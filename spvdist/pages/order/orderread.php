@@ -88,7 +88,7 @@ if (isset($_SESSION['hasil'])) {
           $database = new Database;
           $db = $database->getConnection();
 
-          $selectsql = 'SELECT *, p.id id_order FROM pemesanan p INNER JOIN distributor d ON p.id_distro = d.id LEFT JOIN distribusi_barang db ON db.id_order = p.id ORDER BY db.status ASC';
+          $selectsql = 'SELECT *, p.id id_order FROM pemesanan p INNER JOIN distributor d ON p.id_distro = d.id LEFT JOIN distribusi_barang db ON db.id_order = p.id WHERE db.status is NULL';
           $stmt = $db->prepare($selectsql);
           $stmt->execute();
 
