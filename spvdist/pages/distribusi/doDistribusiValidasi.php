@@ -7,21 +7,21 @@ $db = $database->getConnection();
 
 $gambar_produk = $_FILES['upload_surat']['name'];
 
-var_dump($gambar_produk);
-die();
+// var_dump($gambar_produk);
+// die();
 
 $ekstensi_diperbolehkan = array('png', 'jpg'); //ekstensi file gambar yang bisa diupload 
 $x = explode('.', $gambar_produk); //memisahkan nama file dengan ekstensi yang diupload
 $ekstensi = strtolower(end($x));
-var_dump(explode('.', $gambar_produk));
-die();
+// var_dump(explode('.', $gambar_produk));
+// die();
 $file_tmp = $_FILES['upload_surat']['tmp_name'];
 $angka_acak = uniqid();
 $nama_gambar_baru = $angka_acak . "." . $ekstensi; //menggabungkan angka acak dengan nama file sebenarnya
-var_dump($nama_gambar_baru);
-die();
+// var_dump($nama_gambar_baru);
+// die();
 if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
-  move_uploaded_file($file_tmp, '../images' . $nama_gambar_baru); //memindah file gambar ke folder gambar
+  move_uploaded_file($file_tmp, '../images/' . $nama_gambar_baru); //memindah file gambar ke folder gambar
   // jalankan query INSERT untuk menambah data ke database pastikan sesuai urutan (id tidak perlu karena dibikin otomatis)
 }
 
