@@ -173,12 +173,11 @@ for ($i = 0; $i < $jumlah_distributor; $i++) {
       'Amigol 600ml : ' . $row_nope['a600'] . '\n' .
       'Refill 19lt : ' . $row_nope['refill'] . '\n' .
       'Silahkan melakukan pengecekan secara berkala menggunakan nomor resi di atas melalui halaman web http://' . $host . '/lacakbarang.php?resi=' . $row_nope['no_resi'] . '\n' .
-      'Terimakasih 🙏',
-    'link' => 'http://' . $host . '/lacakbarang.php?resi=' . $row_nope['no_resi']
+      'Terimakasih 🙏'
   );
   $curl = curl_init();
   curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://api.ultramsg.com/instance32799/messages/chat", "https://api.ultramsg.com/instance32799/messages/link",
+    CURLOPT_URL => "https://api.ultramsg.com/instance32799/messages/chat",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,

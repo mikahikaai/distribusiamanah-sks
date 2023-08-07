@@ -23,9 +23,13 @@ $select_distro = "SELECT * FROM distributor WHERE status_keaktifan = 'AKTIF' ORD
 $stmt_distro = $db->prepare($select_distro);
 
 if (isset($_POST['button_create'])) {
+  $tanggal = date_create_from_format('d/m/Y', $_POST['tanggal'])->format('Y-m-d');
+  // var_dump($tanggal);
+  // die();
 
-  $select_nomor_order = "SELECT nomor_order FROM pemesanan WHERE MONTH(tgl_order) = MONTH(NOW()) and YEAR(tgl_order) = YEAR(NOW()) ORDER BY nomor_order DESC LIMIT 1";
+  $select_nomor_order = "SELECT nomor_order FROM pemesanan WHERE MONTH(tgl_order) = MONTH(:tanggal) and YEAR(tgl_order) = YEAR(:tanggal) ORDER BY nomor_order DESC LIMIT 1";
   $stmt_nomor_order = $db->prepare($select_nomor_order);
+  $stmt_nomor_order->bindParam('tanggal', $tanggal);
   $stmt_nomor_order->execute();
   if ($stmt_nomor_order->rowCount() == 0) {
     $nomor_order = str_pad('1', 4, '0', STR_PAD_LEFT);

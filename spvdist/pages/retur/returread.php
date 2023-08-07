@@ -93,11 +93,12 @@ if (isset($_SESSION['hasil'])) {
           $db = $database->getConnection();
 
           $selectsql = 'SELECT *, p.id id_order FROM retur r
-                LEFT JOIN distribusi_barang db ON r.id_distribusi_barang = db.id
-                LEFT JOIN pemesanan p ON p.id = db.id_order
-                LEFT JOIN distribusi_anggota da ON db.id_distribusi_anggota = da.id
-                INNER JOIN distributor d ON p.id_distro = d.id
-                ORDER BY db.status ASC';
+          LEFT JOIN distribusi_barang db ON r.id_distribusi_barang = db.id
+          LEFT JOIN pemesanan p ON p.id = db.id_order
+          LEFT JOIN distribusi_anggota da ON db.id_distribusi_anggota = da.id
+          INNER JOIN distributor d ON p.id_distro = d.id
+          having (rcup + ra330 + ra500 + ra600 +rrefill) > 0
+          ORDER BY db.status ASC';
           $stmt = $db->prepare($selectsql);
           $stmt->execute();
           $no = 1;
