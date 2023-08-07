@@ -54,11 +54,13 @@ include_once "../partials/cssdatatables.php";
           (SELECT count(*) FROM distribusi_anggota da WHERE (driver = k.id or helper_1 = k.id or helper_2 = k.id) AND jam_datang > estimasi_jam_datang + INTERVAL 15 MINUTE AND (jam_berangkat BETWEEN :awal AND :akhir)) tidak_tepat_waktu,
           (SELECT count(*) FROM distribusi_anggota da WHERE (driver = k.id or helper_1 = k.id or helper_2 = k.id) AND jam_datang is not null AND (jam_berangkat BETWEEN :awal and :akhir)) total_berangkat
           FROM karyawan k
+          WHERE k.id = IF(:id = 'all', k.id, :id)
           HAVING total_berangkat > 0 
           ";
           $stmt = $db->prepare($selectSql);
           $stmt->bindParam('awal', $tgl_rekap_awal);
           $stmt->bindParam('akhir', $tgl_rekap_akhir);
+          $stmt->bindParam('id', $_SESSION['id_karyawan_prestasi']);
           $stmt->execute();
 
           $no = 1;

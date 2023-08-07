@@ -7,7 +7,7 @@ $db = $database->getConnection();
 if (isset($_POST['button_show'])) {
   $_SESSION['tgl_prestasi_awal'] = DateTime::createFromFormat('d/m/Y', $_POST['tgl_prestasi_awal']);
   $_SESSION['tgl_prestasi_akhir'] = DateTime::createFromFormat('d/m/Y', $_POST['tgl_prestasi_akhir'])->modify('+23 Hours')->modify('59 Minutes')->modify('59 Seconds');
-  // $_SESSION['id_karyawan_prestasi'] = $_POST['id_karyawan_prestasi'];
+  $_SESSION['id_karyawan_prestasi'] = $_POST['id_karyawan_prestasi'];
 
   // var_dump($_SESSION['tgl_rekap_awal']);
   // die();
@@ -32,7 +32,7 @@ if (isset($_POST['button_show'])) {
             <label for="nama">:</label>
           </div>
           <div class="col-md-4">
-            <select name="id_karyawan_prestasi" id="nama_karyawan" class="form-control" disabled>
+            <select name="id_karyawan_prestasi" id="nama_karyawan" class="form-control">
               <option value="all" selected>-- Semua Karyawan --</option>
               <?php
               $select_karyawan = "SELECT * FROM karyawan WHERE (jabatan = 'DRIVER' OR jabatan = 'HELPER') AND nama != 'HELPER LUAR' ORDER BY nama ASC";
