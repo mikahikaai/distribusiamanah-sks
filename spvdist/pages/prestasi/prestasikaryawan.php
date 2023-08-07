@@ -40,7 +40,6 @@ include_once "../partials/cssdatatables.php";
             <th>Terlambat</th>
             <th>Total Berangkat</th>
             <th>Keterangan</th>
-            <th>Opsi</th>
           </tr>
         </thead>
         <tbody>
@@ -85,9 +84,6 @@ include_once "../partials/cssdatatables.php";
                   echo "<div style='color: red;'>Sangat Buruk</div>";
                 }
                 ?>
-              </td>
-              <td>
-                <a href="?page=prestasikaryawandetail&id=<?= $row['id_karyawan']; ?>" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> Lihat</a>
               </td>
             </tr>
           <?php } ?>
