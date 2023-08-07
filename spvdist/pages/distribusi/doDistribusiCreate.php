@@ -146,7 +146,7 @@ for ($i = 0; $i < $jumlah_distributor; $i++) {
   $stmt_insert_distribusi_barang->bindParam(3, $array_group[$i][2]);
   $stmt_insert_distribusi_barang->execute();
 
-  $last_id_distribusi_barang= $db->lastInsertId();
+  $last_id_distribusi_barang = $db->lastInsertId();
   $insert_retur = "INSERT INTO retur (id_distribusi_barang) VALUES (?)";
   $stmt_insert_retur = $db->prepare($insert_retur);
   $stmt_insert_retur->bindParam(1, $last_id_distribusi_barang);
@@ -162,7 +162,7 @@ for ($i = 0; $i < $jumlah_distributor; $i++) {
     'token' => '4k335ti7s9wvizpa',
     'to' => $row_nope['no_telepon'],
     'body' =>
-      'Hai ' . $row_nope['nama'] . ', ' . '\n' .
+    'Hai ' . $row_nope['nama'] . ', ' . '\n' .
       'Kami telah mengatur pengiriman barang anda ke alamat tujuan dengan,' . '\n' .
       'Nomor Order : ' . $row_nope['nomor_order'] . '\n' .
       'Nomor Resi : ' . $row_nope['no_resi'] . '\n' .

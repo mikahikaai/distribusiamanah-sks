@@ -5,13 +5,33 @@ $db = $database->getConnection();
 // var_dump($_POST['upload_surat_perjalanan']);
 // die();
 
+$gambar_produk = $_FILES['upload_surat']['name'];
+
+var_dump($gambar_produk);
+die();
+
+$ekstensi_diperbolehkan = array('png', 'jpg'); //ekstensi file gambar yang bisa diupload 
+$x = explode('.', $gambar_produk); //memisahkan nama file dengan ekstensi yang diupload
+$ekstensi = strtolower(end($x));
+var_dump(explode('.', $gambar_produk));
+die();
+$file_tmp = $_FILES['upload_surat']['tmp_name'];
+$angka_acak = uniqid();
+$nama_gambar_baru = $angka_acak . "." . $ekstensi; //menggabungkan angka acak dengan nama file sebenarnya
+var_dump($nama_gambar_baru);
+die();
+if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
+  move_uploaded_file($file_tmp, '../images' . $nama_gambar_baru); //memindah file gambar ke folder gambar
+  // jalankan query INSERT untuk menambah data ke database pastikan sesuai urutan (id tidak perlu karena dibikin otomatis)
+}
+
 $jam_datang_format = date_create_from_format('d/m/Y, H.i.s', $_POST['jam_datang']);
 $jam_datang = $jam_datang_format->format('Y-m-d H:i:s');
 
 $updatesql = "UPDATE distribusi_anggota SET jam_datang=?, bukti_kedatangan=? WHERE id = ?";
 $stmt_update = $db->prepare($updatesql);
 $stmt_update->bindParam(1, $jam_datang);
-$stmt_update->bindParam(2, $_POST['upload_surat_perjalanan']);
+$stmt_update->bindParam(2, $nama_gambar_baru);
 $stmt_update->bindParam(3, $_GET['id']);
 $stmt_update->execute();
 

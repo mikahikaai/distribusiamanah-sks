@@ -67,7 +67,7 @@ WHERE da.id = ?";
       </a>
     </div>
     <div class="card-body">
-      <form action="?page=doDistribusiValidasi&id=<?= $_GET['id'] ?>" method="post">
+      <form action="?page=doDistribusiValidasi&id=<?= $_GET['id'] ?>" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <label for="id_plat">Armada</label>
           <select name="id_plat" class="form-control" required>
@@ -274,8 +274,8 @@ WHERE da.id = ?";
               <?php } ?>
             </div>
             <div class="col-md-4">
-              <label for="upload_surat_perjalanan">Upload Surat Perjalanan</label>
-              <input type='file' class='form-control' name="upload_surat_perjalanan" accept="image/*">
+              <label for="upload_surat">Upload Surat Perjalanan</label>
+              <input type='file' class='form-control' name="upload_surat">
             </div>
           </div>
         </div>
