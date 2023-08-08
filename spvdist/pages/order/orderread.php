@@ -94,12 +94,14 @@ if (isset($_SESSION['hasil'])) {
 
           $no = 1;
           while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            if ($row['status'] == NULL) {
+            // var_dump(DateTime::createFromFormat('Y-m-d', $row['tgl_order'])->setTime(0, 0, 0));
+            // var_dump(new \DateTime('today'));
+            // die();
+            if (DateTime::createFromFormat('Y-m-d', $row['tgl_order'])->setTime(0, 0, 0) >= new \DateTime('today')) {
           ?>
-
-              <tr style="background-color: pink">
-              <?php } else { ?>
               <tr>
+              <?php } else { ?>
+              <tr style="background-color: pink">
               <?php } ?>
               <td><?= $no++ ?></td>
               <td><?= $row['nomor_order'] ?></td>
@@ -110,15 +112,15 @@ if (isset($_SESSION['hasil'])) {
               <td><?= $row['a500'] ?></td>
               <td><?= $row['a600'] ?></td>
               <td><?= $row['refill'] ?></td>
-              <?php if ($row['status'] == NULL) { ?>
-                <td>Perlu Dikirim</td>
+              <?php if (DateTime::createFromFormat('Y-m-d', $row['tgl_order'])->setTime(0, 0, 0) >= new \DateTime('today')) { ?>
+                <td>Order Baru</td>
                 <td>
                   <a href="?page=distribusicreate" class="btn btn-success btn-sm mr-1">
                     <i class="fa fa-plane"></i> Kirim
                   </a>
                 </td>
               <?php } else { ?>
-                <td><?= $row['status'] ?></td>
+                <td>Pelu Kirim</td>
                 <td>
                   <button type="button" class="btn btn-danger btn-sm mr-1" disabled>
                     <i class="fa fa-plane"></i> Kirim
