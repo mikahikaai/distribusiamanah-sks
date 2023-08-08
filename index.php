@@ -54,7 +54,13 @@ if (isset($_SESSION['jabatan'])) {
   die();
 }
 
+if (!isset($_COOKIE['popup'])) {
+  setcookie('popup', true, time() + 20);
+  echo "<div id='popup_judul'></div>";
+}
+
 if (isset($_POST['login'])) {
+
   $_SESSION['errorlogin'] = false;
   $loginsql = "SELECT * FROM karyawan WHERE username=? and password=?";
   $stmt = $db->prepare($loginsql);
@@ -100,20 +106,10 @@ if (isset($_POST['login'])) {
       if ($_SESSION['errorlogin']) {
 ?>
         <div id='errorlogin'></div>
-    <?php
+<?php
         unset($_SESSION['errorlogin']);
       }
     }
-  }
-}
-
-$_SESSION['popup_judul'] = true;
-if (isset($_SESSION['popup_judul'])) {
-  if ($_SESSION['popup_judul']) {
-    ?>
-    <div id='popup_judul'></div>
-<?php
-    unset($_SESSION['popup_judul']);
   }
 }
 
@@ -373,9 +369,35 @@ if (isset($_SESSION['popup_judul'])) {
   if ($('div#popup_judul').length) {
     Swal.fire({
       title: 'Judul Aplikasi',
-      text: 'Sistem Informasi Layanan Pengiriman Barang Berbasis Web Pada PT Pancuran Kaapit Sendang di Kota Banjarbaru',
+      html: 'Sistem Informasi Layanan Pengiriman Barang <br> Berbasis Web Pada PT Pancuran Kaapit Sendang <br> di Kota Banjarbaru',
       // icon: 'error',
       confirmButtonText: 'OK'
     })
   };
+
+  // if ($('div#popup_judul').length) {
+  //   let timerInterval
+  //   Swal.fire({
+  //     title: 'Judul Aplikasi',
+  //     html: 'Sistem Informasi Layanan Pengiriman Barang Berbasis Web Pada PT Pancuran Kaapit Sendang di Kota Banjarbaru <br> <b></b>',
+  //     timer: 3000,
+  //     timerProgressBar: true,
+  //     // showConfirmationButton: 'OK',
+  //     didOpen: () => {
+  //       Swal.showLoading()
+  //       const b = Swal.getHtmlContainer().querySelector('b')
+  //       timerInterval = setInterval(() => {
+  //         b.textContent = Swal.getTimerLeft()
+  //       }, 100)
+  //     },
+  //     willClose: () => {
+  //       clearInterval(timerInterval)
+  //     }
+  //   }).then((result) => {
+  //     /* Read more about handling dismissals below */
+  //     if (result.dismiss === Swal.DismissReason.timer) {
+  //       console.log('I was closed by the timer')
+  //     }
+  //   })
+  // };
 </script>
