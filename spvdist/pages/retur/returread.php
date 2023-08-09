@@ -1,6 +1,9 @@
 <?php include_once "../partials/cssdatatables.php" ?>
 
 <?php
+$tgl_awal = $_SESSION['tgl_rekap_awal']->format('Y-m-d H:i:s');
+$tgl_akhir = $_SESSION['tgl_rekap_akhir']->format('Y-m-d H:i:s');
+
 if (isset($_SESSION['hasil'])) {
   if ($_SESSION['hasil']) {
 ?>
@@ -64,7 +67,7 @@ if (isset($_SESSION['hasil'])) {
 <div class="content">
   <div class="card">
     <div class="card-header">
-      <h3 class="card-title">Data Retur</h3>
+      <h3 class="card-title">Data Retur <br> Periode : <?= tanggal_indo($_SESSION['tgl_rekap_awal']->format('Y-m-d')) . " sd " . tanggal_indo($_SESSION['tgl_rekap_akhir']->format('Y-m-d')) ?></h3>
       <a href="report/reportretur.php" target="_blank" class="btn btn-warning btn-sm float-right">
         <i class="fa fa-file-pdf"></i> Export PDF
       </a>
@@ -97,9 +100,12 @@ if (isset($_SESSION['hasil'])) {
           LEFT JOIN pemesanan p ON p.id = db.id_order
           LEFT JOIN distribusi_anggota da ON db.id_distribusi_anggota = da.id
           INNER JOIN distributor d ON p.id_distro = d.id
+          WHERE (tanggal BETWEEN :awal AND :akhir)
           having (rcup + ra330 + ra500 + ra600 +rrefill) > 0
           ORDER BY db.status ASC';
           $stmt = $db->prepare($selectsql);
+          $stmt->bindParam('awal', $tgl_awal);
+          $stmt->bindParam('akhir', $tgl_akhir);
           $stmt->execute();
           $no = 1;
           while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

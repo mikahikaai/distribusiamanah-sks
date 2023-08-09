@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+$tgl_awal = $_SESSION['tgl_rekap_awal']->format('Y-m-d H:i:s');
+$tgl_akhir = $_SESSION['tgl_rekap_akhir']->format('Y-m-d H:i:s');
+
 if (!isset($_SESSION['jabatan'])) {
   echo '<meta http-equiv="refresh" content="0;url=../../logout.php"/>';
   exit;
@@ -13,12 +16,16 @@ $database = new Database;
 $db = $database->getConnection();
 
 $selectsql = 'SELECT *, p.id id_order FROM retur r
-                LEFT JOIN distribusi_barang db ON r.id_distribusi_barang = db.id
-                LEFT JOIN pemesanan p ON p.id = db.id_order
-                LEFT JOIN distribusi_anggota da ON db.id_distribusi_anggota = da.id
-                INNER JOIN distributor d ON p.id_distro = d.id
-                ORDER BY db.status ASC';
+LEFT JOIN distribusi_barang db ON r.id_distribusi_barang = db.id
+LEFT JOIN pemesanan p ON p.id = db.id_order
+LEFT JOIN distribusi_anggota da ON db.id_distribusi_anggota = da.id
+INNER JOIN distributor d ON p.id_distro = d.id
+WHERE (tanggal BETWEEN :awal AND :akhir)
+having (rcup + ra330 + ra500 + ra600 +rrefill) > 0
+ORDER BY db.status ASC';
 $stmt = $db->prepare($selectsql);
+$stmt->bindParam('awal', $tgl_awal);
+$stmt->bindParam('akhir', $tgl_akhir);
 $stmt->execute();
 ?>
 <style>
@@ -72,7 +79,11 @@ $stmt->execute();
   <tr>
     <td align="center" style="font-weight: bold; padding-bottom: 20px; font-size: x-large;"><u>DATA RETUR</u></td>
   </tr>
+  <tr>
+  </tr>
 </table>
+
+<h4>Periode : <?= tanggal_indo($_SESSION['tgl_rekap_awal']->format('Y-m-d')) . " sd " . tanggal_indo($_SESSION['tgl_rekap_akhir']->format('Y-m-d')) ?></h4>
 
 <!-- content -->
 <table id="content">

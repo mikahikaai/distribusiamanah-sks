@@ -88,30 +88,26 @@ if (isset($_SESSION['hasil'])) {
           $database = new Database;
           $db = $database->getConnection();
 
-          $selectsql = 'SELECT *, p.id id_order FROM pemesanan p INNER JOIN distributor d ON p.id_distro = d.id LEFT JOIN distribusi_barang db ON db.id_order = p.id WHERE db.status is NULL';
+          $selectsql = 'SELECT * FROM pemesanan p
+          LEFT JOIN distribusi_barang db on db.id_order = p.id
+          LEFT JOIN retur r on r.id_distribusi_barang = db.id
+          LEFT JOIN distributor d on d.id = p.id_distro
+          HAVING (rcup+ra330+ra500+ra600+rrefill)>0 OR no_resi is NULL';
           $stmt = $db->prepare($selectsql);
           $stmt->execute();
 
           $no = 1;
-          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            // var_dump(DateTime::createFromFormat('Y-m-d', $row['tgl_order'])->setTime(0, 0, 0));
-            // var_dump(new \DateTime('today'));
-            // die();
-            if (DateTime::createFromFormat('Y-m-d', $row['tgl_order'])->setTime(0, 0, 0) >= new \DateTime('today')) {
-          ?>
-              <tr>
-              <?php } else { ?>
-              <tr style="background-color: pink">
-              <?php } ?>
+          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
+            <tr>
               <td><?= $no++ ?></td>
               <td><?= $row['nomor_order'] ?></td>
               <td><?= tanggal_indo($row['tgl_order']) ?></td>
-              <td><?= $row['nama'] ?></td>
-              <td><?= $row['cup'] ?></td>
-              <td><?= $row['a330'] ?></td>
-              <td><?= $row['a500'] ?></td>
-              <td><?= $row['a600'] ?></td>
-              <td><?= $row['refill'] ?></td>
+              <td><?= !empty($row['no_resi']) ? $row['nama'] . " (RETUR)" : $row['nama'] ?></td>
+              <td><?= !empty($row['no_resi']) ? $row['rcup'] : $row['cup'] ?></td>
+              <td><?= !empty($row['no_resi']) ? $row['ra330'] : $row['a330'] ?></td>
+              <td><?= !empty($row['no_resi']) ? $row['ra500'] : $row['a500'] ?></td>
+              <td><?= !empty($row['no_resi']) ? $row['ra600'] : $row['a600'] ?></td>
+              <td><?= !empty($row['no_resi']) ? $row['rrefill'] : $row['refill'] ?></td>
               <?php if (DateTime::createFromFormat('Y-m-d', $row['tgl_order'])->setTime(0, 0, 0) >= new \DateTime('today')) { ?>
                 <td>Order Baru</td>
                 <td>
@@ -127,8 +123,8 @@ if (isset($_SESSION['hasil'])) {
                   </button>
                 </td>
               <?php } ?>
-              </tr>
-            <?php } ?>
+            </tr>
+          <?php } ?>
         </tbody>
       </table>
     </div>
