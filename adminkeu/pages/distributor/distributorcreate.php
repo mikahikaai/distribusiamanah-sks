@@ -100,7 +100,7 @@ if ($stmt->rowCount() > 0) {
           <div class="col-md-6">
             <div class="form-group">
               <label for="jarak">Jarak Dari Pabrik</label>
-              <input type="text" name="jarak" id="jarak" class="form-control" value="<?= isset($_POST['button_create']) ? $_POST['jarak'] : '' ?>" readonly>
+              <input type="text" name="jarak" id="jarak" class="form-control" value="<?= isset($_POST['button_create']) ? $_POST['jarak'] : '' ?>">
             </div>
           </div>
           <div class="col-md-6">
@@ -118,11 +118,11 @@ if ($stmt->rowCount() > 0) {
             <input type="hidden" id="lng" name="lng" class="form-control">
           </div>
         </div>
-        <label for="">Map</label>
+        <!-- <label for="">Map</label>
         <div class="auto-search-wrapper mb-2">
           <input type="text" autocomplete="off" id="search" class="full-width form-control" placeholder="Ketik nama tempat yang ingin anda cari..." />
-        </div>
-        <div id="map"></div>
+        </div> -->
+        <!-- <div id="map"></div> -->
         <a href="?page=distributorread" class="btn btn-danger btn-sm float-right mt-2">
           <i class="fa fa-arrow-left"></i> Kembali
         </a>

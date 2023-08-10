@@ -371,6 +371,14 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="?page=rangeorderterkirim" class="nav-link" id="dataterkirim">
+                  <i class="nav-icon far fa-circle nav-icon"></i>
+                  <p>
+                    Data Barang Diterima
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="?page=rangeretur" class="nav-link" id="dataretur">
                   <i class="nav-icon far fa-circle nav-icon"></i>
                   <p>

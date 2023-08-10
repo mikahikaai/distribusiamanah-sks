@@ -55,7 +55,7 @@ if (isset($_SESSION['jabatan'])) {
 }
 
 if (!isset($_COOKIE['popup'])) {
-  setcookie('popup', true, time() + 20);
+  setcookie('popup', true, time() + 60);
   echo "<div id='popup_judul'></div>";
 }
 
@@ -368,7 +368,7 @@ if (isset($_POST['login'])) {
 
   if ($('div#popup_judul').length) {
     Swal.fire({
-      title: 'Judul Aplikasi',
+      // title: 'Judul Aplikasi',
       html: 'Sistem Informasi Layanan Pengiriman Barang <br> Berbasis Web Pada PT Pancuran Kaapit Sendang <br> di Kota Banjarbaru',
       // icon: 'error',
       confirmButtonText: 'OK'
