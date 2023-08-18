@@ -80,7 +80,7 @@ if (isset($_SESSION['hasil'])) {
             <th>Amigol 600 ml</th>
             <th>Refill Galon 19 ltr</th>
             <th>Status</th>
-            <th style="display: flex;">Opsi</th>
+            <!-- <th style="display: flex;">Opsi</th> -->
           </tr>
         </thead>
         <tbody>
@@ -110,18 +110,10 @@ if (isset($_SESSION['hasil'])) {
               <td><?= !empty($row['no_resi']) ? $row['rrefill'] : $row['refill'] ?></td>
               <?php if (DateTime::createFromFormat('Y-m-d', $row['tgl_order'])->setTime(0, 0, 0) >= new \DateTime('today')) { ?>
                 <td>Order Baru</td>
-                <td>
-                  <a href="?page=distribusicreate" class="btn btn-success btn-sm mr-1">
-                    <i class="fa fa-plane"></i> Kirim
-                  </a>
-                </td>
+                
               <?php } else { ?>
                 <td>Pelu Kirim</td>
-                <td>
-                  <button type="button" class="btn btn-danger btn-sm mr-1" disabled>
-                    <i class="fa fa-plane"></i> Kirim
-                  </button>
-                </td>
+               
               <?php } ?>
             </tr>
           <?php } ?>
