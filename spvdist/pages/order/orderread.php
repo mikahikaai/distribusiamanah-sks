@@ -112,7 +112,7 @@ if (isset($_SESSION['hasil'])) {
                 <td>Order Baru</td>
                 
               <?php } else { ?>
-                <td>Pelu Kirim Hoiyah</td>
+                <td>Pelu Kirim</td>
                
               <?php } ?>
             </tr>
