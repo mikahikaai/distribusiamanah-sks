@@ -113,10 +113,7 @@ if (isset($_SESSION['hasil'])) {
               <td><?= $row['refill'] ?></td>
               <?php if ($row['status'] == NULL) { ?>
                 <td>Sedang Diproses</td>
-              <?php } else { ?>
-                <td><?= $row['status'] ?></td>
-              <?php } ?>
-              <td>
+                <td>
                 <a href="?page=orderupdate&id=<?= $row['id_order']; ?>" class="btn btn-primary btn-sm mr-1">
                   <i class="fa fa-edit"></i> Ubah
                 </a>
@@ -124,6 +121,18 @@ if (isset($_SESSION['hasil'])) {
                   <i class="fa fa-trash"></i> Hapus
                 </a>
               </td>
+              <?php } else { ?>
+                <td><?= $row['status'] ?></td>
+                <td>
+                <a href="?page=orderupdate&id=<?= $row['id_order']; ?>" class="btn btn-primary btn-sm mr-1 disabled">
+                  <i class="fa fa-edit"></i> Ubah
+                </a>
+                <a href="?page=orderdelete&id=<?= $row['id_order']; ?>" class="btn btn-danger btn-sm mr-1 disabled" id='deleteorder'>
+                  <i class="fa fa-trash"></i> Hapus
+                </a>
+              </td>
+              <?php } ?>
+              
             </tr>
           <?php } ?>
         </tbody>
