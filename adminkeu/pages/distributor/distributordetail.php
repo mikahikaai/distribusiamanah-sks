@@ -73,8 +73,8 @@ if (isset($_GET['id'])) {
             </div>
           </div>
         </div>
-        <label for="">Map</label>
-        <div id="map"></div>
+        <!-- <label for="">Map</label>
+        <div id="map"></div> -->
         <button type="button" class="btn btn-danger btn-sm float-right mr-1 mt-2" onclick="history.back()">
           <i class="fa fa-arrow-left"></i> Kembali
         </button>

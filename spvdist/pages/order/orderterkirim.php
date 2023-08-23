@@ -1,6 +1,9 @@
 <?php include_once "../partials/cssdatatables.php" ?>
 
 <?php
+$tgl_awal = $_SESSION['tgl_rekap_awal']->format('Y-m-d H:i:s');
+$tgl_akhir = $_SESSION['tgl_rekap_akhir']->format('Y-m-d H:i:s');
+
 if (isset($_SESSION['hasil'])) {
   if ($_SESSION['hasil']) {
 ?>
@@ -47,12 +50,12 @@ if (isset($_SESSION['hasil'])) {
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Order</h1>
+        <h1 class="m-0">Order Terkirim</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="./">Home</a></li>
-          <li class="breadcrumb-item active">Order</li>
+          <li class="breadcrumb-item active">Order Terkirim</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
@@ -64,13 +67,10 @@ if (isset($_SESSION['hasil'])) {
 <div class="content">
   <div class="card">
     <div class="card-header">
-      <h3 class="card-title">Data Order</h3>
-      <a href="report/reportorder.php" target="_blank" class="btn btn-warning btn-sm float-right">
+      <h3 class="card-title">Data Order Terkirim <br> Periode : <?= tanggal_indo($_SESSION['tgl_rekap_awal']->format('Y-m-d')) . " sd " . tanggal_indo($_SESSION['tgl_rekap_akhir']->format('Y-m-d')) ?></h3>
+      <!-- <a href="report/reportretur.php" target="_blank" class="btn btn-warning btn-sm float-right">
         <i class="fa fa-file-pdf"></i> Export PDF
-      </a>
-      <a href="?page=ordercreate" class="btn btn-success btn-sm mr-2 float-right">
-        <i class="fa fa-plus-circle"></i> Tambah Data
-      </a>
+      </a> -->
     </div>
     <div class="card-body">
       <table id="mytable" class="table table-bordered table-hover" style="white-space: nowrap; background-color: white; width: 100%;">
@@ -80,13 +80,14 @@ if (isset($_SESSION['hasil'])) {
             <th>No. Order</th>
             <th>Tgl. Order</th>
             <th>Nama Distributor</th>
+            <th>Tgl. Terkirim</th>
             <th>Cup 240 ml</th>
             <th>Amigol 330 ml</th>
             <th>Amigol 500 ml</th>
             <th>Amigol 600 ml</th>
             <th>Refill Galon 19 ltr</th>
-            <th>Status</th>
-            <th style="display: flex;">Opsi</th>
+            <!-- <th>Status</th>
+            <th style="display: flex;">Opsi</th> -->
           </tr>
         </thead>
         <tbody>
@@ -94,10 +95,22 @@ if (isset($_SESSION['hasil'])) {
           $database = new Database;
           $db = $database->getConnection();
 
-          $selectsql = 'SELECT *, p.id id_order FROM pemesanan p INNER JOIN distributor d ON p.id_distro = d.id LEFT JOIN distribusi_barang db ON db.id_order = p.id ORDER BY p.id DESC';
+          $selectsql = 'SELECT *,
+          (p.cup - r.rcup) terkirim_cup,
+          (p.a330 - r.ra330) terkirim_a330,
+          (p.a500 - r.ra500) terkirim_a500,
+          (p.a600 - r.ra600) terkirim_a600,
+          (p.refill - r.rrefill) terkirim_refill
+          FROM pemesanan p
+          INNER JOIN distribusi_barang db ON p.id = db.id_order
+          LEFT JOIN distribusi_anggota da ON da.id = db.id_distribusi_anggota
+          INNER JOIN retur r ON r.id_distribusi_barang = db.id
+          INNER JOIN distributor d ON d.id = p.id_distro
+          WHERE (tanggal BETWEEN :awal AND :akhir)';
           $stmt = $db->prepare($selectsql);
+          $stmt->bindParam('awal', $tgl_awal);
+          $stmt->bindParam('akhir', $tgl_akhir);
           $stmt->execute();
-
           $no = 1;
           while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
           ?>
@@ -106,33 +119,12 @@ if (isset($_SESSION['hasil'])) {
               <td><?= $row['nomor_order'] ?></td>
               <td><?= tanggal_indo($row['tgl_order']) ?></td>
               <td><?= $row['nama'] ?></td>
-              <td><?= $row['cup'] ?></td>
-              <td><?= $row['a330'] ?></td>
-              <td><?= $row['a500'] ?></td>
-              <td><?= $row['a600'] ?></td>
-              <td><?= $row['refill'] ?></td>
-              <?php if ($row['status'] == NULL) { ?>
-                <td>Sedang Diproses</td>
-                <td>
-                <a href="?page=orderupdate&id=<?= $row['id_order']; ?>" class="btn btn-primary btn-sm mr-1">
-                  <i class="fa fa-edit"></i> Ubah
-                </a>
-                <a href="?page=orderdelete&id=<?= $row['id_order']; ?>" class="btn btn-danger btn-sm mr-1" id='deleteorder'>
-                  <i class="fa fa-trash"></i> Hapus
-                </a>
-              </td>
-              <?php } else { ?>
-                <td><?= $row['status'] ?></td>
-                <td>
-                <a href="?page=orderupdate&id=<?= $row['id_order']; ?>" class="btn btn-primary btn-sm mr-1 disabled">
-                  <i class="fa fa-edit"></i> Ubah
-                </a>
-                <a href="?page=orderdelete&id=<?= $row['id_order']; ?>" class="btn btn-danger btn-sm mr-1 disabled" id='deleteorder'>
-                  <i class="fa fa-trash"></i> Hapus
-                </a>
-              </td>
-              <?php } ?>
-              
+              <td><?= tanggal_indo(date_format(date_create($row['tanggal']), 'Y-m-d')) ?></td>
+              <td><?= $row['terkirim_cup'] ?></td>
+              <td><?= $row['terkirim_a330'] ?></td>
+              <td><?= $row['terkirim_a500'] ?></td>
+              <td><?= $row['terkirim_a600'] ?></td>
+              <td><?= $row['terkirim_refill'] ?></td>
             </tr>
           <?php } ?>
         </tbody>

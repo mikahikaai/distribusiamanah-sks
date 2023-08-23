@@ -34,6 +34,14 @@ if (isset($_GET['page'])) {
       file_exists('pages/order/orderread.php') ? include 'pages/order/orderread.php' : include '../pages/404.php';
       $title = 'Order';
       break;
+    case 'orderterkirim':
+      file_exists('pages/order/orderterkirim.php') ? include 'pages/order/orderterkirim.php' : include '../pages/404.php';
+      $title = 'Terkirim';
+      break;
+    case 'rangeorderterkirim':
+      file_exists('pages/order/rangeorderterkirim.php') ? include 'pages/order/rangeorderterkirim.php' : include '../pages/404.php';
+      $title = 'Terkirim';
+      break;
     case 'dataretur':
       file_exists('pages/retur/returread.php') ? include 'pages/retur/returread.php' : include '../pages/404.php';
       $title = 'Retur';

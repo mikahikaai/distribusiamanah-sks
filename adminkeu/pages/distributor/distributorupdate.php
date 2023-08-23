@@ -100,7 +100,7 @@ if (isset($_GET['id'])) {
           <div class="col-md-6">
             <div class="form-group">
               <label for="jarak">Jarak Dari Pabrik</label>
-              <input type="text" name="jarak" id="jarak" class="form-control" value="<?= $row['jarak']; ?>" readonly>
+              <input type="text" name="jarak" id="jarak" class="form-control" value="<?= $row['jarak']; ?>">
             </div>
           </div>
           <div class="col-md-6">
@@ -127,11 +127,11 @@ if (isset($_GET['id'])) {
             <input type="hidden" id="lng" name="lng" value="<?= $row['lng'] ?>" class="form-control">
           </div>
         </div>
-        <label for="">Map</label>
+        <!-- <label for="">Map</label>
         <div class="auto-search-wrapper mb-2">
           <input type="text" autocomplete="off" id="search" class="full-width" placeholder="Ketik nama tempat yang ingin anda cari..." />
         </div>
-        <div id="map"></div>
+        <div id="map"></div> -->
         <a href="?page=distributorread" class="btn btn-danger btn-sm float-right mt-2">
           <i class="fa fa-arrow-left"></i> Kembali
         </a>

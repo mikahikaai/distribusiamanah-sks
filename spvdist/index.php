@@ -224,6 +224,10 @@ include_once "../partials/scripts.php";
       $("a#dataretur").addClass("active");
       $("li#order").addClass("menu-open");
       $("a#link_order").addClass("active");
+    } else if (title == "Terkirim") {
+      $("a#dataterkirim").addClass("active");
+      $("li#order").addClass("menu-open");
+      $("a#link_order").addClass("active");
     } else if (title == "Distribusi") {
       $("a#distribusi").addClass("active");
       $("li#master_distribusi").addClass("menu-open");
