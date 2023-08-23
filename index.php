@@ -369,7 +369,7 @@ if (isset($_POST['login'])) {
   if ($('div#popup_judul').length) {
     Swal.fire({
       // title: 'Judul Aplikasi',
-      html: 'Sistem Informasi Layanan Pengiriman Barang <br> Berbasis Web Pada PT Pancuran Kaapit Sendang <br> di Kota Banjarbaru',
+      html: '<b>Sistem Informasi Layanan Pengiriman Barang <br> Berbasis Web Pada PT Pancuran Kaapit Sendang <br> di Kota Banjarbaru<b>',
       // icon: 'error',
       confirmButtonText: 'OK'
     })
