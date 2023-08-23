@@ -109,7 +109,7 @@ if (isset($_SESSION['hasil'])) {
               <td><?= !empty($row['no_resi']) ? $row['ra600'] : $row['a600'] ?></td>
               <td><?= !empty($row['no_resi']) ? $row['rrefill'] : $row['refill'] ?></td>
               <?php if (DateTime::createFromFormat('Y-m-d', $row['tgl_order'])->setTime(0, 0, 0) >= new \DateTime('today')) { ?>
-                <td>Order Baru</td>
+                <td>Order Baru Hoiyahh</td>
                 
               <?php } else { ?>
                 <td>Pelu Kirim</td>
